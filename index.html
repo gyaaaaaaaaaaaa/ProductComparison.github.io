@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+  <title>商品比較プログラム</title>
+</head>
+<body>
+
+  <div>
+    <h2>商品1</h2>
+    <label for="item1Quantity">個数:</label>
+    <input type="number" id="item1Quantity" oninput="calculatePrice()">
+    <label for="item1Price">値段(円):</label>
+    <input type="number" id="item1Price" oninput="calculatePrice()">
+  </div>
+
+  <div>
+    <h2>商品2</h2>
+    <label for="item2Quantity">個数:</label>
+    <input type="number" id="item2Quantity" oninput="calculatePrice()">
+    <label for="item2Price">値段(円):</label>
+    <input type="number" id="item2Price" oninput="calculatePrice()">
+  </div>
+
+  <div id="priceInfo"></div>
+
+  <div id="result"></div>
+
+  <script>
+    function calculatePrice() {
+      // 商品1の個数と値段の取得
+      const item1Quantity = document.getElementById('item1Quantity').valueAsNumber || 0;
+      const item1Price = document.getElementById('item1Price').valueAsNumber || 0;
+
+      // 商品2の個数と値段の取得
+      const item2Quantity = document.getElementById('item2Quantity').valueAsNumber || 0;
+      const item2Price = document.getElementById('item2Price').valueAsNumber || 0;
+
+      // 1個あたりの価格を計算
+      const item1PerUnitPrice = item1Quantity !== 0 ? item1Price / item1Quantity : 0;
+      const item2PerUnitPrice = item2Quantity !== 0 ? item2Price / item2Quantity : 0;
+
+      // 価格情報の表示
+      const priceInfoElement = document.getElementById('priceInfo');
+      priceInfoElement.innerHTML = `
+        <p>商品1は1個あたり${item1PerUnitPrice}円</p>
+        <p>商品2は1個あたり${item2PerUnitPrice}円</p>
+      `;
+
+      // 比較結果の表示
+      const resultElement = document.getElementById('result');
+      if (item1PerUnitPrice < item2PerUnitPrice) {
+        resultElement.textContent = '商品1が得です。';
+      } else if (item1PerUnitPrice > item2PerUnitPrice) {
+        resultElement.textContent = '商品2が得です。';
+      } else {
+        resultElement.textContent = 'どちらも同じです。';
+      }
+    }
+  </script>
+
+</body>
+</html>
